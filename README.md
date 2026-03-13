@@ -1,5 +1,8 @@
 # 🤖 WhatsApp AI Agent for Adidas Customer Support Chatbot
 
+<img width="1845" height="760" alt="Screenshot 2026-03-13 212630" src="https://github.com/user-attachments/assets/4b60739d-94e2-478c-9c83-45abe429ea62" />
+
+
 An intelligent AI-powered customer support chatbot for Adidas, built using **n8n**, **Google Gemini 2.5 Flash**, and **WhatsApp** integration. This agent can handle customer queries, look up order records, and provide real-time support — all through WhatsApp.
 
 ---
