@@ -1,0 +1,298 @@
+{
+  "name": "Adidas Customer Support",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "com.twilio.messaging.inbound-message.received"
+        ]
+      },
+      "type": "n8n-nodes-base.twilioTrigger",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        496
+      ],
+      "id": "3e18fc96-bb25-449e-8c1e-ab2970471dd5",
+      "name": "Twilio Trigger",
+      "webhookId": "ba014173-4203-4de8-99fb-592881e19ba1",
+      "credentials": {
+        "twilioApi": {
+          "id": "mpTABLumbjujVSdl",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "from": "=whatsapp:+14155238886",
+        "to": "whatsapp:+9975273931",
+        "message": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [
+        720,
+        496
+      ],
+      "id": "4d3e87fa-817b-4d78-bc67-d73b5ceaf8fd",
+      "name": "Send an SMS/MMS/WhatsApp message",
+      "credentials": {
+        "twilioApi": {
+          "id": "mpTABLumbjujVSdl",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "give me the name of the most expensive product that you have",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        248,
+        496
+      ],
+      "id": "664f72d5-6ffa-4e6a-b8bb-5de00567d836",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "operation": "search",
+        "base": {
+          "__rl": true,
+          "value": "appbVPqDFaFSMPolN",
+          "mode": "list",
+          "cachedResultName": "Adidas",
+          "cachedResultUrl": "https://airtable.com/appbVPqDFaFSMPolN"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblL0rc1zkCdVimWj",
+          "mode": "list",
+          "cachedResultName": "inventory",
+          "cachedResultUrl": "https://airtable.com/appbVPqDFaFSMPolN/tblL0rc1zkCdVimWj"
+        },
+        "filterByFormula": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Filter_By_Formula', `Filter based on Price, the field name is product_price`, 'string') }}",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        256,
+        720
+      ],
+      "id": "57f7745e-8461-42be-a5a9-a551da06c576",
+      "name": "order_records",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "ZU6m8cjX1JpRoLRZ",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        128,
+        720
+      ],
+      "id": "87c50b1b-83f8-4b91-8d3a-7b3a1dcdfdf6",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "X1Tn3h64p9pHqE06",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "value": "appbVPqDFaFSMPolN",
+          "mode": "list",
+          "cachedResultName": "Adidas",
+          "cachedResultUrl": "https://airtable.com/appbVPqDFaFSMPolN"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl5xoVZeq37SXSfQ",
+          "mode": "list",
+          "cachedResultName": "Orders",
+          "cachedResultUrl": "https://airtable.com/appbVPqDFaFSMPolN/tbl5xoVZeq37SXSfQ"
+        },
+        "id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Record_ID', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        384,
+        720
+      ],
+      "id": "c13950cc-626a-427b-bf2c-2354a179de9b",
+      "name": "Get a record in Airtable",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "ZU6m8cjX1JpRoLRZ",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "base": {
+          "__rl": true,
+          "value": "appbVPqDFaFSMPolN",
+          "mode": "list",
+          "cachedResultName": "Adidas",
+          "cachedResultUrl": "https://airtable.com/appbVPqDFaFSMPolN"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblZjHe9aGduD1DZh",
+          "mode": "list",
+          "cachedResultName": "Tickets",
+          "cachedResultUrl": "https://airtable.com/appbVPqDFaFSMPolN/tblZjHe9aGduD1DZh"
+        },
+        "id": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Record_ID', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtableTool",
+      "typeVersion": 2.1,
+      "position": [
+        512,
+        720
+      ],
+      "id": "b4ca7b42-044c-40c4-99c9-18a8b4206515",
+      "name": "Get a record in Airtable1",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "ZU6m8cjX1JpRoLRZ",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -96,
+        496
+      ],
+      "id": "4f86790b-1fc4-4e8b-b623-b62ca1a5ad23",
+      "name": "return_policy"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Twilio Trigger": {
+      "main": [
+        [
+          {
+            "node": "return_policy",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send an SMS/MMS/WhatsApp message": {
+      "main": [
+        []
+      ]
+    },
+    "order_records": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a record in Airtable": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get a record in Airtable1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send an SMS/MMS/WhatsApp message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "return_policy": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "4c32e1b4-427c-4e77-9ac1-1323cc10a753",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e6b27950379bf647947ade7f0a52e6577b3a943a8e69b9686ec4932f11e8fc23"
+  },
+  "id": "eCXifuI324hmMvbN",
+  "tags": []
+}
