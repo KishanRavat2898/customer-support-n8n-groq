@@ -122,16 +122,8 @@ Make sure the following are set as credentials in n8n and NOT hardcoded:
 
 ## 📸 Workflow Preview
 
-> *(Add a screenshot of your n8n workflow here)*
 
----
 
 ## 🙌 Built By
 
-Made with ❤️ using n8n + Groq
-
----
-
-## 📄 License
-
-MIT License — feel free to use, modify, and share.
+Kishan Ravat
